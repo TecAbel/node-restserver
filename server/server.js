@@ -4,6 +4,9 @@ require('./config/config');
 //inicializar express
 const express = require('express')
 const app = express();
+//para conexion a base de datos
+const mongoose = require('mongoose');
+
 
 //recibir post 1
 const bodyParser = require('body-parser');
@@ -14,48 +17,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/', function(req, res) {
-    res.json('Hello World');
-});
-//consulta
-app.get('/usuario', function(req, res) {
-    res.json('get Usuario');
-});
-//registrar
-app.post('/usuario', function(req, res) {
+//llamar a rutas
+app.use(require('./routes/usuario'));
 
-    //obtener lo enviado por post
-    let body = req.body;
+mongoose.connect('mongodb://localhost:27017/cafe', { useNewUrlParser: true }, (err, resp) => {
+    if (err) throw err;
 
-    //menaje de que falta un elemento
-    //los status HTTP es un estándar 400 - bad request
-    if (body.nombre === undefined) {
-
-        res.status(400).json({
-            ok: false,
-            mensaje: 'El nombre es necesario'
-        })
-
-    } else {
-        res.json({
-            persona: body
-        });
-    }
-
-});
-//actualizar
-app.put('/usuario/:id', function(req, res) {
-
-    let id = req.params.id;
-
-    res.json({
-        id,
-
-    });
-});
-//eliminar
-app.delete('/usuario', function(req, res) {
-    res.json('delete Usuario');
+    console.log('Base de datos Online');
 });
 app.listen(process.env.PORT, () => {
     console.log('Escuchando puerto: ', 3000);
