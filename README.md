@@ -1,8 +1,8 @@
 # Proyecto de servidor REST
 
 ## Herramientas
-    - express
-    - Bodyparser
+- express
+- Bodyparser
 
 ...
 npm install
