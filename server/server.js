@@ -20,11 +20,17 @@ app.use(bodyParser.json())
 //llamar a rutas
 app.use(require('./routes/usuario'));
 
-mongoose.connect('mongodb://localhost:27017/cafe', { useNewUrlParser: true }, (err, resp) => {
-    if (err) throw err;
+mongoose.connect(process.env.URL_DB,
+    //para evitar los warnings
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true
+    }, (err, resp) => {
+        if (err) throw err;
 
-    console.log('Base de datos Online');
-});
+        console.log('Base de datos Online');
+    });
 app.listen(process.env.PORT, () => {
     console.log('Escuchando puerto: ', 3000);
 });
