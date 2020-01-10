@@ -1,5 +1,5 @@
 //inicializar express
-const express = require('express')
+const express = require('express');
 const app = express();
 //bcrypt
 const bcrypt = require('bcrypt');
